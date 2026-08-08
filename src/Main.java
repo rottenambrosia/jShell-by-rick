@@ -5,6 +5,16 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) throws Exception {
+
+        System.out.println(
+                "                       \n" +
+                        "   _ _____ _       _ _ \n" +
+                        "  |_|   __| |_ ___| | |\n" +
+                        "  | |__   |   | -_| | |\n" +
+                        " _| |_____|_|_|___|_|_|\n" +
+                        "|___|                  "
+        );
+        System.out.println("Java Interactive Shell - rick");
         Scanner scanner = new Scanner(System.in);
         String cwd =  System.getProperty("user.dir");
         while (true) {

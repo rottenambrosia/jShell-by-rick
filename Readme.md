@@ -1,5 +1,19 @@
 # Java Interactive Shell
 
+<p align="left">
+  <img src="https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white" />
+  <img src="https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black" />
+  <img src="https://img.shields.io/badge/Windows-0078D6?style=for-the-badge&logo=windows&logoColor=white" />
+</p>
+
+```text
+   _ _____ _       _ _ 
+  |_|   __| |_ ___| | |
+  | |__   |   | -_| | |
+ _| |_____|_|_|___|_|_|
+|___|                  
+```
+
 This is a lightweight, interactive command-line shell written entirely in Java. It provides a custom Read-Eval-Print Loop (REPL) that executes core shell built-ins, manages environment state, and dynamically resolves external binaries from the system's `PATH`.
 
 ## Features
