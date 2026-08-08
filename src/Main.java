@@ -1,13 +1,15 @@
-import java.util.Scanner;
 import java.io.File;
+import java.io.IOException;
+import java.util.Scanner;
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         Scanner scanner = new Scanner(System.in);
         String cwd =  System.getProperty("user.dir");
         while (true) {
-            System.out.println("> ");
+            System.out.print("> ");
+            System.out.flush();
             String userInput = scanner.nextLine();
             String[] tokens = userInput.trim().split("\\s+");
             if (userInput.trim().equals("")) {
@@ -23,18 +25,30 @@ public class Main {
                 echo(userInput);
                 continue;
             }
-            // type
+            // command : type
             if (tokens[0].equals("type")) {
                 type(userInput.substring(5));
                 continue;
             }
-
+            // command : pwd -> so you don't get lost in the scary alleyways
+            if (tokens[0].equals("pwd")) {
+                System.out.println(cwd);
+                continue;
+            }
+            // command : running executables
+            if (locateExecutable(tokens[0]) != null) {
+                runExecutable(tokens, cwd);
+                continue;
+            }
+            // command : cd
+            if ("cd".equals(tokens[0])) {
+                if(userInput.length() > 2) cwd = changeDirectory(userInput.substring(3), cwd);
+                continue;
+            }
             System.out.println(tokens[0] + " command not found");
-            return;
+            continue;
         }
     }
-
-
     // exit : well...
     private static void exit () {
         System.exit(0);
@@ -61,11 +75,18 @@ public class Main {
     }
     private static File locateExecutable (String command) {
         String path = System.getenv("PATH");
-        String[] pathDir =  path.split(";");
+        String[] pathDir =  path.split(File.pathSeparator);
         for (String dir : pathDir) {
             File file = new File(dir, command);
-            if (file.exists()) {
+            if (file.isFile() &&  file.canExecute()) {
                 return file;
+            }
+            // Useful on Windows when user enters, for example, "git"
+            if (System.getProperty("os.name").toLowerCase().contains("win")) {
+                File exeFile = new File(dir, command + ".exe");
+                if (exeFile.isFile()) {
+                    return exeFile;
+                }
             }
         }
         return null;
@@ -80,6 +101,28 @@ public class Main {
         }
         return;
     }
+    // executable : well I mean otherwise what's the point of all this bs
+    private static void runExecutable(String[] command, String dir) throws Exception {
+        if (locateExecutable(command[0]) != null) {
+            ProcessBuilder pb = new ProcessBuilder(command);
+            pb.directory(new File(dir));
+            pb.redirectErrorStream(true);
+            pb.inheritIO();
+            Process process = pb.start();
+            process.waitFor();
+        }
+        return;
+    }
+    // cd : change directory
+    private static String changeDirectory(String command, String dir) throws Exception {
+        if (command.isBlank()) {
+            return dir;
+        }
+        File directory = new File(command).isAbsolute() ? new File(command) : new File(dir, command);
+        if (directory.isDirectory()) {
+            return directory.getAbsolutePath();
+        }
+        System.out.println(command + ": No such file or directory");
+        return dir;
+    }
 }
-
-
