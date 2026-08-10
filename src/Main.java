@@ -3,22 +3,24 @@ import java.io.IOException;
 import java.util.Scanner;
 
 public class Main {
-
+    private static final String ANSI_CYAN = "\u001B[36m";
+    private static final String ANSI_RESET = "\u001B[0m";
+    private static final String ANSI_GREEN = "\u001B[32m";
     public static void main(String[] args) throws Exception {
 
-        System.out.println(
+        System.out.println(ANSI_CYAN +
                 "                       \n" +
                         "   _ _____ _       _ _ \n" +
                         "  |_|   __| |_ ___| | |\n" +
                         "  | |__   |   | -_| | |\n" +
                         " _| |_____|_|_|___|_|_|\n" +
                         "|___|                  "
-        );
+        + ANSI_RESET);
         System.out.println("Java Interactive Shell - rick");
         Scanner scanner = new Scanner(System.in);
         String cwd =  System.getProperty("user.dir");
         while (true) {
-            System.out.print("> ");
+            System.out.print(ANSI_GREEN + "> " + ANSI_RESET);
             System.out.flush();
             String userInput = scanner.nextLine();
             String[] tokens = userInput.trim().split("\\s+");
@@ -51,7 +53,7 @@ public class Main {
                 continue;
             }
             // command : cd
-            if ("cd".equals(tokens[0])) {
+            if (tokens[0].equals("cd")) {
                 if(userInput.length() > 2) cwd = changeDirectory(userInput.substring(3), cwd);
                 continue;
             }
