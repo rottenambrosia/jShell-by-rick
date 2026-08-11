@@ -7,11 +7,12 @@
 </p>
 
 ```text
-   _ _____ _       _ _ 
-  |_|   __| |_ ___| | |
-  | |__   |   | -_| | |
- _| |_____|_|_|___|_|_|
-|___|                  
+                      _         
+   ___ _ __ _   _ ___| |_ __ _  
+  / __| '__| | | / __| __/ _` | 
+ | (__| |  | |_| \__ \ || (_| | 
+  \___|_|   \__,_|___/\__\__,_| 
+                                                
 ```
 
 This is a lightweight, interactive command-line shell written entirely in Java. It provides a custom Read-Eval-Print Loop (REPL) that executes core shell built-ins, manages environment state, and dynamically resolves external binaries from the system's `PATH`.
