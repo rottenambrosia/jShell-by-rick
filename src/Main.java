@@ -35,7 +35,7 @@ public class Main {
             }
             // command : echo
             if (tokens[0].equals("echo")) {
-                echo(userInput);
+                echo(userInput.substring(5));
                 continue;
             }
             // command : type
@@ -68,7 +68,7 @@ public class Main {
     }
     // echo : prints out whatever you write after it (thank god this isn't a notebook)
     private static void echo(String command) {
-        System.out.println(command.trim().substring(5));
+        System.out.println(command);
     }
     // type : lets you know if the command you just conjured happens to actually be anything of value
     private static boolean isBuiltin (String command) {
@@ -198,6 +198,9 @@ public class Main {
     private static String changeDirectory(String command, String dir) throws Exception {
         if (command.isBlank()) {
             return dir;
+        }
+        else if (command.equals("~")) {
+            return System.getProperty("user.home");
         }
         File directory = new File(command).isAbsolute() ? new File(command) : new File(dir, command);
         if (directory.isDirectory()) {
